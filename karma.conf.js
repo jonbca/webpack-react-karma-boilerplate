@@ -11,10 +11,11 @@ module.exports = function (config) {
       'karma-mocha',
       'karma-sourcemap-loader',
       'karma-webpack',
-      'karma-mocha-reporter'
+      'karma-mocha-reporter',
+      'karma-eslint'
     ],
     preprocessors: {
-      'test/test.bundle.js': ['webpack', 'sourcemap']
+      'test/test.bundle.js': ['eslint', 'webpack', 'sourcemap']
     },
 
     reporters: ['mocha'],
