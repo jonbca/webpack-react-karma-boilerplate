@@ -1,8 +1,11 @@
+var process = require('process')
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-module.exports = {
+var PRODUCTION = process.env['NODE_ENV'] === 'production'
+
+var config = {
   entry: [
     './src/main'
   ],
@@ -10,7 +13,6 @@ module.exports = {
     publicPath: '/',
     filename: 'build/bundle.js'
   },
-  devtool: 'eval',
   module: {
     preLoaders: [
       {
@@ -39,6 +41,24 @@ module.exports = {
   postcss: function () {
     return [require('autoprefixer'), require('precss'), require('postcss-normalize')]
   },
-  debug: true,
-  plugins: [ new ExtractTextPlugin('build/[name].css') ]
+  debug: !PRODUCTION,
+  plugins: [
+    new ExtractTextPlugin('build/[name].css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      }
+    })
+  ]
 }
+
+if (!PRODUCTION) {
+  config.devtool = 'eval'
+} else {
+  config.plugins.concat([
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.DedupePlugin()
+  ]);
+}
+
+module.exports = config;
