@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: [
@@ -7,7 +8,7 @@ module.exports = {
   ],
   output: {
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'build/bundle.js'
   },
   devtool: 'eval',
   module: {
@@ -20,8 +21,17 @@ module.exports = {
           plugins: ['transform-runtime'],
           presets: ['es2015', 'react'],
         }
+      },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader'),
       }
     ]
   },
-  debug: true
+  postcss: function () {
+    return [require('autoprefixer'), require('precss'), require('postcss-normalize')]
+  },
+  debug: true,
+  plugins: [ new ExtractTextPlugin('build/[name].css') ]
 }
