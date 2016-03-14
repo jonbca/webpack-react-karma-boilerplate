@@ -11,7 +11,8 @@ var config = {
   ],
   output: {
     publicPath: '/',
-    filename: 'build/bundle.js'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'build')
   },
   module: {
     preLoaders: [
@@ -43,7 +44,7 @@ var config = {
   },
   debug: !PRODUCTION,
   plugins: [
-    new ExtractTextPlugin('build/[name].css'),
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV)

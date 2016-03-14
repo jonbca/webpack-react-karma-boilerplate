@@ -42,7 +42,8 @@
     "postcss-normalize": "^0.1.2",
     "precss": "^1.4.0",
     "style-loader": "^0.13.0",
-    "webpack": "^1.12.14"
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
     "babel-plugin-transform-runtime": "^6.6.0",
